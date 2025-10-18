@@ -1019,7 +1019,7 @@ int msdf_genGlyph(msdf_Result* result, stbtt_fontinfo *font, int stbttGlyphIndex
     }
 
     // calculate edge-colors
-    uint64_t seed = 0;
+    unsigned long long seed = 0;
     double anglethreshold = 3.0;
     double crossthreshold = sin(anglethreshold);
     size_t corner_count = 0;
