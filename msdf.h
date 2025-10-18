@@ -834,7 +834,7 @@ int msdf_genGlyph(msdf_Result* result, stbtt_fontinfo *font, int stbttGlyphIndex
 
     float glyphWidth = ix1 - ix0;
     float glyphHeight = iy1 - iy0;
-    float borderWidthF32 = borderWidth;
+    //float borderWidthF32 = borderWidth;
     float wF32 = ceilf(glyphWidth  * scale);
     float hF32 = ceilf(glyphHeight * scale);
     wF32 += 2.f * borderWidth;
@@ -873,8 +873,8 @@ int msdf_genGlyph(msdf_Result* result, stbtt_fontinfo *font, int stbttGlyphIndex
     int32_t glyphOrgX = ix0 * scale;
     int32_t glyphOrgY = iy0 * scale;
 
-    int32_t borderWidthX = borderWidth;
-    int32_t borderWidthY = borderWidth;
+    //int32_t borderWidthX = borderWidth;
+    //int32_t borderWidthY = borderWidth;
 
     //   org  8,8
     // - bord 4,4
