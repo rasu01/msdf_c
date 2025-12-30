@@ -1385,11 +1385,20 @@ int msdf_genGlyph(msdf_Result* result, stbtt_fontinfo *font, int stbttGlyphIndex
         allocCtx.free(clashes, allocCtx.ctx);
     }
 
+    int rx0, rx1, ry0, ry1;
+    stbtt_GetGlyphBitmapBox(
+        font,
+        glyphIdx,
+        scale,
+        scale,
+        &rx0, &ry0, &rx1, &ry1
+    );
+
     result->glyphIdx = glyphIdx;
     result->rgb = bitmap;
     result->width = w;
     result->height = h;
-    result->yOffset = translateY;
+    result->yOffset = borderWidth - ry0;
     result->advance = advance;
     result->left_bearing = left_bearing;
 
