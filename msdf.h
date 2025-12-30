@@ -866,9 +866,10 @@ int msdf_genGlyph(msdf_Result* result, stbtt_fontinfo *font, int stbttGlyphIndex
     //}
 
     // get left offset and advance
-    //int left_bearing, advance;
-    //stbtt_GetGlyphHMetrics(font, glyphIdx, &advance, &left_bearing);
-    //left_bearing *= scale;
+    int left_bearing, advance;
+    stbtt_GetGlyphHMetrics(font, glyphIdx, &advance, &left_bearing);
+    left_bearing *= scale;
+    advance *= scale;
 
     int32_t glyphOrgX = ix0 * scale;
     int32_t glyphOrgY = iy0 * scale;
@@ -1389,6 +1390,8 @@ int msdf_genGlyph(msdf_Result* result, stbtt_fontinfo *font, int stbttGlyphIndex
     result->width = w;
     result->height = h;
     result->yOffset = translateY;
+    result->advance = advance;
+    result->left_bearing = left_bearing;
 
     return 1;
 }
