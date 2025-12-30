@@ -35,7 +35,9 @@ typedef struct msdf_Result {
   float* rgb;
   int width;
   int height;
-  int yOffset;
+  float width_float;
+  float height_float;
+  float yOffset;
 } msdf_Result;
 
 typedef struct msdf_AllocCtx {
@@ -842,6 +844,9 @@ int msdf_genGlyph(msdf_Result* result, stbtt_fontinfo *font, int stbttGlyphIndex
     int w = wF32;
     int h = hF32;
 
+    float glyphWidthFloat = glyphWidth * scale + borderWidth * 2.0;
+    float glyphHeightFloat = glyphHeight * scale + borderWidth * 2.0;
+
     float* bitmap = (float*) allocCtx.alloc(w * h * 3 * sizeof(float), allocCtx.ctx);
     memset(bitmap, 0x0, w * h * 3 * sizeof(float));
 
@@ -1385,12 +1390,13 @@ int msdf_genGlyph(msdf_Result* result, stbtt_fontinfo *font, int stbttGlyphIndex
         allocCtx.free(clashes, allocCtx.ctx);
     }
 
+    double res = 32768.0;
     int rx0, rx1, ry0, ry1;
     stbtt_GetGlyphBitmapBox(
         font,
         glyphIdx,
-        scale,
-        scale,
+        scale * res,
+        scale * res,
         &rx0, &ry0, &rx1, &ry1
     );
 
@@ -1398,7 +1404,9 @@ int msdf_genGlyph(msdf_Result* result, stbtt_fontinfo *font, int stbttGlyphIndex
     result->rgb = bitmap;
     result->width = w;
     result->height = h;
-    result->yOffset = borderWidth - ry0;
+    result->width_float = glyphWidthFloat;
+    result->height_float = glyphHeightFloat;
+    result->yOffset = ((double)borderWidth - (double)ry0) / res;
     result->advance = advance;
     result->left_bearing = left_bearing;
 
